@@ -916,8 +916,8 @@ class NotificationService:
             import pandas as pd
             import os
             
-            # 设置中文字体（尝试常见的支持中文的字体）
-            plt.rcParams['font.sans-serif'] = ['SimHei', 'Microsoft YaHei', 'Arial Unicode MS', 'WenQuanYi Micro Hei']
+            # 设置中文字体（优先使用文泉驿微米黑，这是 GitHub Actions 推荐的中文）
+            plt.rcParams['font.sans-serif'] = ['WenQuanYi Micro Hei', 'SimHei', 'Microsoft YaHei', 'Arial Unicode MS', 'Cymzen', 'DejaVu Sans']
             plt.rcParams['axes.unicode_minus'] = False
             
             # 准备数据
