@@ -26,8 +26,8 @@ import os
 # 代理配置 - 仅在本地环境使用，GitHub Actions 不需要
 if os.getenv("GITHUB_ACTIONS") != "true":
     # 本地开发环境，如需代理请取消注释或修改端口
-    os.environ["http_proxy"] = "http://127.0.0.1:10809"
-    os.environ["https_proxy"] = "http://127.0.0.1:10809"
+    os.environ["http_proxy"] = "http://127.0.0.1:7890"
+    os.environ["https_proxy"] = "http://127.0.0.1:7890"
     pass
 
 import argparse
@@ -574,18 +574,10 @@ class StockAnalysisPipeline:
             filepath = self.notifier.save_report_to_file(report)
             logger.info(f"决策仪表盘日报已保存: {filepath}")
             
-            # 推送到企业微信（使用精简版决策仪表盘）
+            # 推送到企业微信（使用分条发送模式）
             if self.notifier.is_available():
-                # 生成精简版决策仪表盘用于微信推送
-                wechat_dashboard = self.notifier.generate_wechat_dashboard(results)
-                logger.info(f"微信决策仪表盘长度: {len(wechat_dashboard)} 字符")
-                logger.debug(f"微信推送内容:\n{wechat_dashboard}")
-                
-                success = self.notifier.send_to_wechat(wechat_dashboard)
-                if success:
-                    logger.info("决策仪表盘推送成功")
-                else:
-                    logger.warning("决策仪表盘推送失败")
+                logger.info("开始推送企业微信通知（分条独立发送）...")
+                self.notifier.send_batch_notifications(results)
             else:
                 logger.info("企业微信未配置，跳过推送")
                 
