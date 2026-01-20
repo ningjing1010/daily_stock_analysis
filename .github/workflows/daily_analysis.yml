@@ -53,6 +53,11 @@ jobs:
           GEMINI_MODEL: ${{ secrets.GEMINI_MODEL || 'gemini-3-flash-preview' }}
           GEMINI_MODEL_FALLBACK: ${{ secrets.GEMINI_MODEL_FALLBACK || 'gemini-2.5-flash' }}
           GEMINI_REQUEST_DELAY: '3.0'  # GitHub Actions 建议增加延时
+
+          # ✅ 新增：OpenAI 兼容 API (DeepSeek 等) - 关键配置
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+          OPENAI_BASE_URL: ${{ secrets.OPENAI_BASE_URL }}
+          OPENAI_MODEL: ${{ secrets.OPENAI_MODEL }}
           
           # 数据源 (可选)
           TUSHARE_TOKEN: ${{ secrets.TUSHARE_TOKEN }}
